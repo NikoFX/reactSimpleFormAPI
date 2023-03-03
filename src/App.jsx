@@ -50,7 +50,17 @@ export default function App() {
             country: formData.country
           }
         }),
-      }).finally(()=>setPostStatus('fulfilled'))
+      })
+        .then(() => {
+          setFormData({
+            companyName: '',
+            contactName: '',
+            contactTitle: '',
+            country: '',
+            city: ''
+          })
+        })
+        .finally(() => setPostStatus('fulfilled'))
     }
   }
 
@@ -84,7 +94,7 @@ export default function App() {
             sx={{ ...inputStyle }}
             renderInput={(params) => <TextField {...params} name='city' onSelect={(e) => formHandle(e)} label="City" value={formData.city} required />}
           />
-          <Button type='submit' disabled={postStatus==='fulfilled'} sx={{ width: '100%', height:'50px' }} variant="contained">{postStatus?(postStatus==='pending'?<CircularProgress sx={{width:'100%'}} />:'Supplier added'):('ADD SUPPLIER')}</Button>
+          <Button type='submit' disabled={postStatus === 'fulfilled'} sx={{ width: '100%', height: '50px' }} variant="contained">{postStatus ? (postStatus === 'pending' ? <CircularProgress sx={{ width: '100%' }} /> : 'Supplier added') : ('ADD SUPPLIER')}</Button>
         </form>
       </Paper>
     </Container>
